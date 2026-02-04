@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffccd5;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, #9b59b6, #e91e63);
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+        }
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: radial-gradient(circle, #ff6384 30%, #ff3366);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(20px); opacity: 0; }
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+        .modal-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Happy Birthday, Bestie Mona darling 🎉🍰</h2>
+        <button class="btn btn-custom" onclick="checkDate()">Let's Go! ✨</button>
+    </div>
+
+    <div class="modal-overlay" id="countdownModal">
+        <div class="modal-box">
+            <h3>Birthday Countdown</h3>
+            <p>Wait, your birthday is yet to come. Try on your birthday.</p>
+            <p id="countdownText"></p>
+            <button class="btn btn-custom" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function checkDate() {
+            let today = new Date();
+            let eventDate = new Date(today.getFullYear(), 10, 9); // Nov 09
+            if (today.getMonth() === 10 && today.getDate() > 7) {
+                window.location.href = 'cake.html';
+            } else {
+                let timeDiff = eventDate - today;
+                let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("countdownText").innerText = `${days} days, ${hours} hours, and ${minutes} minutes left!`;
+                document.getElementById("countdownModal").style.display = "flex";
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById("countdownModal").style.display = "none";
+        }
+        
+        function createBalloons() {
+            for (let i = 0; i < 20; i++) {
+                let balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(balloon);
+            }
+        }
+        createBalloons();
+    </script>
+</body>
+</html>

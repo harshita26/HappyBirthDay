@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blow the Candle</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background: linear-gradient(135deg, #fde2e4, #fae1dd);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .cake-container {
+            position: relative;
+            text-align: center;
+            margin-top: 70px;
+        }
+        .cake {
+            width: 150px;
+            height: 100px;
+            background: #ff6f61;
+            border-radius: 10px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .candles {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .candle {
+            width: 10px;
+            height: 30px;
+            background: #ffcc00;
+            position: relative;
+            cursor: pointer;
+        }
+        .flame {
+            width: 10px;
+            height: 15px;
+            background: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s;
+        }
+        .hidden {
+            opacity: 0;
+        }
+
+        /* Floating Cakes Animation */
+        .floating-cake {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            bottom: -100px;
+            animation: floatCake linear infinite;
+        }
+
+        @keyframes floatCake {
+            0% { transform: translateY(110vh); opacity: 0; } /* Start from bottom */
+            10% { opacity: 1; } /* Slowly appear */
+            100% { transform: translateY(-120vh); opacity: 0; } /* Float to the top */
+        }
+    </style>
+</head>
+<body>
+    <h2>Make a Wish and Blow the Candle! 🎂</h2>
+    <div class="cake-container">
+        <div class="candles">
+            <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+            <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+            <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+            <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        </div>
+        <div class="cake"></div>
+    </div>
+
+    <div class="modal fade" id="birthdayModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <h3>Happy Birthday! 🎉🎂</h3>
+                <p>Wishing you a wonderful day filled with love and joy!</p>
+                <p>The candles are out! Let's take a trip down memory lane. ✨💕</p>
+                <button type="button" class="btn btn-primary" onclick="redirectToMemoryLane()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let candlesBlown = 0;
+
+        function blowCandle(element) {
+            element.querySelector('.flame').classList.add('hidden');
+            candlesBlown++;
+            if (candlesBlown === 4) {
+                setTimeout(() => {
+                    let modal = new bootstrap.Modal(document.getElementById('birthdayModal'));
+                    modal.show();
+                }, 500);
+            }
+        }
+
+        function redirectToMemoryLane() {
+            window.location.href = "memory-lane.html";
+        }
+
+        function createFloatingCakes() {
+            for (let i = 0; i < 15; i++) {
+                let cake = document.createElement('img');
+                cake.src = "cake.png"; // Ensure "cake.png" exists in the project folder
+                
+                // Fallback to emoji if image is missing
+                cake.onerror = function () {
+                    cake.src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='brown'><text x='0' y='20' font-size='20'>🎂</text></svg>";
+                };
+
+                cake.classList.add('floating-cake');
+                cake.style.left = Math.random() * 100 + 'vw';
+                cake.style.animationDuration = (Math.random() * 4 + 5) + 's'; // Random duration
+                document.body.appendChild(cake);
+            }
+        }
+
+        createFloatingCakes();
+    </script>
+</body>
+</html>
