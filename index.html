@@ -90,8 +90,8 @@
     <script>
         function checkDate() {
             let today = new Date();
-            let eventDate = new Date(today.getFullYear(), 2, 4); // Nov 09
-            if (today.getMonth() === 2 && today.getDate() > 3) {
+            let eventDate = new Date(today.getFullYear(), 1, 3); // Feb 04
+            if (today.getMonth() === 1 && today.getDate() > 3) {
                 window.location.href = 'cake.html';
             } else {
                 let timeDiff = eventDate - today;
@@ -120,4 +120,5 @@
     </script>
 </body>
 </html>
+
 
